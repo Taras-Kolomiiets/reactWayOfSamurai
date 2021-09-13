@@ -3,25 +3,31 @@ import {
   sendMessageActionCreator,
   updateMessageTextActionCreator,
 } from "../../redux/dialogs-reducer";
+import StoreContext from "../../storeContext";
 import Dialogs from "./Dialogs";
 
 const DialogsContainer = (props) => {
-  let state = props.store.getState().dialogsPage;
-
-  const onSendMessageClick = () => {
-    props.store.dispatch(sendMessageActionCreator());
-  };
-
-  const onNewMessageChange = (message) => {
-    props.store.dispatch(updateMessageTextActionCreator(message));
-  };
-
   return (
-    <Dialogs
-      updateMessageText={onNewMessageChange}
-      sendMessage={onSendMessageClick}
-      dialogsPage={state}
-    />
+    <StoreContext.Consumer>
+      {(store) => {
+        let state = store.getState().dialogsPage;
+
+        const onSendMessageClick = () => {
+          store.dispatch(sendMessageActionCreator());
+        };
+
+        const onNewMessageChange = (message) => {
+          store.dispatch(updateMessageTextActionCreator(message));
+        };
+        return (
+          <Dialogs
+            updateMessageText={onNewMessageChange}
+            sendMessage={onSendMessageClick}
+            dialogsPage={state}
+          />
+        );
+      }}
+    </StoreContext.Consumer>
   );
 };
 
