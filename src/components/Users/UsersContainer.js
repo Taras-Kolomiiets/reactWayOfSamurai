@@ -1,14 +1,14 @@
+import Users from "./Users";
 import { connect } from "react-redux";
 import { followAC, setUsersAC, unfollowAC } from "../../redux/users-reducer";
-import Users from "./Users";
 
-const mapStateToProps = (state) => {
+let mapStateToProps = (state) => {
   return {
     users: state.usersPage.users,
   };
 };
 
-const MapDispatchToProps = (dispatch) => {
+let mapDispatchToProps = (dispatch) => {
   return {
     follow: (userId) => {
       dispatch(followAC(userId));
@@ -24,5 +24,5 @@ const MapDispatchToProps = (dispatch) => {
 
 export default connect(
   mapStateToProps,
-  MapDispatchToProps
+  mapDispatchToProps
 )(Users);
