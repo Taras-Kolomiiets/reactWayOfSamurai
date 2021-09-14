@@ -1,85 +1,68 @@
+import axios from "axios";
 import React from "react";
 
-let Users = (props) => {
-  if (props.users.length === 0) {
-    props.setUsers([
-      {
-        id: 1,
-        photoUrl: "https://image.flaticon.com/icons/png/128/924/924874.png",
-        followed: true,
-        fullName: "Taras K",
-        status: "I will be programmer",
-        location: { city: "Lviv", country: "Ukraine" },
-      },
-      {
-        id: 2,
-        photoUrl: "https://image.flaticon.com/icons/png/128/924/924874.png",
-        followed: false,
-        fullName: "Slavik I",
-        status: "Hello my friend",
-        location: { city: "Lviv", country: "Ukraine" },
-      },
-      {
-        id: 3,
-        photoUrl: "https://image.flaticon.com/icons/png/128/924/924874.png",
-        followed: true,
-        fullName: "Nazar S",
-        status: "I am a lawyer",
-        location: { city: "Kyiv", country: "Ukraine" },
-      },
-      {
-        id: 4,
-        photoUrl: "https://image.flaticon.com/icons/png/128/924/924874.png",
-        followed: true,
-        fullName: "Sergey S",
-        status: "I am a programmer",
-        location: { city: "Kyiv", country: "Ukraine" },
-      },
-    ]);
+class Users extends React.Component {
+  constructor(props) {
+    super(props);
+
+    axios
+      .get("https://social-network.samuraijs.com/api/1.0/users")
+      .then((response) => {
+        this.props.setUsers(response.data.items);
+      });
   }
 
-  return (
-    <div>
-      {props.users.map((u) => (
-        <div key={u.id}>
-          <span>
-            <div>
-              <img src={u.photoUrl} alt="" />
-            </div>
-            <div>
-              {u.followed ? (
-                <button
-                  onClick={() => {
-                    props.unfollow(u.id);
-                  }}
-                >
-                  Unfollow
-                </button>
-              ) : (
-                <button
-                  onClick={() => {
-                    props.follow(u.id);
-                  }}
-                >
-                  Follow
-                </button>
-              )}
-            </div>
-          </span>
-          <span>
+  render() {
+    return (
+      <div>
+        {this.props.users.map((u) => (
+          <div key={u.id}>
             <span>
-              <div>{u.fullName}</div>
-              <div>{u.status}</div>
+              <div>
+                <img
+                  src={
+                    u.photos.small != null
+                      ? u.photos.small
+                      : "https://image.flaticon.com/icons/png/128/924/924874.png"
+                  }
+                  alt=""
+                />
+              </div>
+              <div>
+                {u.followed ? (
+                  <button
+                    onClick={() => {
+                      this.props.unfollow(u.id);
+                    }}
+                  >
+                    Unfollow
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => {
+                      this.props.follow(u.id);
+                    }}
+                  >
+                    Follow
+                  </button>
+                )}
+              </div>
             </span>
             <span>
-              <div>{u.location.country}</div>
-              <div>{u.location.city}</div>
+              <span>
+                <div>{u.name}</div>
+                <div>{u.status}</div>
+              </span>
+              <span>
+                <div>{"u.location.country"}</div>
+                <div>{"u.location.city"}</div>
+              </span>
             </span>
-          </span>
-        </div>
-      ))}
-    </div>
-  );
-};
+          </div>
+        ))}
+      </div>
+    );
+  }
+}
 
 export default Users;
