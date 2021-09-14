@@ -1,10 +1,15 @@
-import React from 'react';
-import s from './Header.module.css';
+import React from "react";
+import s from "./Header.module.css";
 
 const Header = () => {
-    return <header className={s.header}>
-        <img src='https://www.freelogodesign.org/Content/img/logo-ex-7.png' />
+  return (
+    <header className={s.header}>
+      <img
+        src="https://www.freelogodesign.org/Content/img/logo-ex-7.png"
+        alt="aaa"
+      />
     </header>
-}
+  );
+};
 
 export default Header;
