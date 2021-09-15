@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import styles from "./Users.module.css";
 
 const Users = (props) => {
@@ -30,14 +31,16 @@ const Users = (props) => {
         <div key={u.id}>
           <span>
             <div>
-              <img
-                src={
-                  u.photos.small != null
-                    ? u.photos.small
-                    : "https://image.flaticon.com/icons/png/128/924/924874.png"
-                }
-                alt=""
-              />
+              <NavLink to={"/profile/" + u.id}>
+                <img
+                  src={
+                    u.photos.small != null
+                      ? u.photos.small
+                      : "https://image.flaticon.com/icons/png/128/924/924874.png"
+                  }
+                  alt=""
+                />
+              </NavLink>
             </div>
             <div>
               {u.followed ? (
