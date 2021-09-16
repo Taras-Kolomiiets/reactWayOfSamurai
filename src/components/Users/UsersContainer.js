@@ -2,36 +2,21 @@ import React from "react";
 import { connect } from "react-redux";
 import Users from "./Users";
 import {
-  follow,
+  acceptFollow,
   setCurrentPage,
-  setUsers,
-  unfollow,
-  setTotalPageCount,
-  toggleIsFetching,
+  acceptUnfollow,
   toggleFollowingProgress,
+  getUsers,
 } from "../../redux/users-reducer";
 import Preloader from "../Common/Preloader/Preloader";
-import { usersAPI } from "../../api/api";
 
 class UsersContainer extends React.Component {
   componentDidMount() {
-    this.props.toggleIsFetching(true);
-    usersAPI
-      .getUsers(this.props.currentPage, this.props.pageSize)
-      .then((data) => {
-        this.props.setUsers(data.items);
-        this.props.setTotalPageCount(data.totalCount);
-        this.props.toggleIsFetching(false);
-      });
+    this.props.getUsers(this.props.currentPage, this.props.pageSize);
   }
 
   onPageChanged = (p) => {
-    this.props.setCurrentPage(p);
-    this.props.toggleIsFetching(true);
-    usersAPI.getUsers(p, this.props.pageSize).then((data) => {
-      this.props.setUsers(data.items);
-      this.props.toggleIsFetching(false);
-    });
+    this.props.getUsers(p, this.props.pageSize);
   };
 
   render() {
@@ -44,8 +29,8 @@ class UsersContainer extends React.Component {
           currentPage={this.props.currentPage}
           onPageChanged={this.onPageChanged}
           users={this.props.users}
-          unfollow={this.props.unfollow}
-          follow={this.props.follow}
+          unfollow={this.props.acceptUnfollow}
+          follow={this.props.acceptFollow}
           toggleFollowingProgress={this.props.toggleFollowingProgress}
           followingInProgress={this.props.followingInProgress}
         />
@@ -68,12 +53,10 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
   {
-    follow,
-    unfollow,
-    setUsers,
+    acceptFollow,
+    acceptUnfollow,
     setCurrentPage,
-    setTotalPageCount,
-    toggleIsFetching,
     toggleFollowingProgress,
+    getUsers,
   }
 )(UsersContainer);
