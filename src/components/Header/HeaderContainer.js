@@ -5,6 +5,7 @@ import {
   setAuthUsersData,
   toggleIsFetching,
   getAuthUserData,
+  logout,
 } from "../../redux/auth-reducer";
 
 class HeaderContainer extends React.Component {
@@ -24,5 +25,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { setAuthUsersData, toggleIsFetching, getAuthUserData }
+  { setAuthUsersData, toggleIsFetching, getAuthUserData, logout }
 )(HeaderContainer);
