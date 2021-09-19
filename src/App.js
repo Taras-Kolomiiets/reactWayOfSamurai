@@ -52,5 +52,5 @@ export default compose(
   connect(
     mapStateToProps,
     { initialazeApp }
-  )(App)
-);
+  )
+)(App);

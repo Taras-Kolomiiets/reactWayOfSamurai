@@ -23,7 +23,7 @@ export const initialazedSuccess = () => ({
 export const initialazeApp = () => (dispatch) => {
   let promise = dispatch(getAuthUserData());
 
-  promise.then(() => {
+  Promise.all([promise]).then(() => {
     dispatch(initialazedSuccess());
   });
 };
